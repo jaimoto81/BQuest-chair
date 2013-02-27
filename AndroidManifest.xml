@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
+      package="co.bquest.silla" android:versionName="1.1" android:versionCode="5" android:hardwareAccelerated="true">
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true"
+        android:resizeable="true"
+        android:anyDensity="true"
+        />
+
+   <application android:icon="@drawable/icon" android:label="@string/app_name"
+        android:hardwareAccelerated="true"
+        android:debuggable="true">
+        <activity android:name=".messages.main.activities.MessagesActivity" android:label="@string/app_name"
+                android:theme="@android:style/Theme.Black.NoTitleBar"
+                android:configChanges="orientation|keyboardHidden|keyboard|locale">
+        </activity>
+        
+        
+        
+        <!-- C2DM -->
+        <!-- In order to use the c2dm library, an
+            application must declare a class with the name C2DMReceiver, in
+            own package, extending com.google.android.c2dm.C2DMBaseReceiver
+        -->
+        <service android:name=".messages.C2DMReceiver" android:enabled="true" />
+
+        <!-- Only Google services can send messages to the app.
+             If this permission were not present
+             any other app would be able to send messages to us. -->
+        <receiver android:name=".messages.c2dm.C2DMBroadcastReceiver"
+                  android:permission="com.google.android.c2dm.permission.SEND">
+            <!-- Receive actual messages -->
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="co.bquest.silla" />
+            </intent-filter>
+            <!-- Receive registration ids -->
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="co.bquest.silla" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".messages.main.activities.BQuest">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+       
+        
+    </application>
+
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17"/>
+    
+     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />   
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />   
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- App receives GCM messages. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- GCM connects to Google Services. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Read phone state -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <permission android:name="co.bquest.silla.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+
+    <uses-permission android:name="co.bquest.silla.permission.C2D_MESSAGE" />
+</manifest> 
