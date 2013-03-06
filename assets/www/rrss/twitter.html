@@ -3,16 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Simple Sample Users PhoneGap</title>
-	<script type="text/javascript" src="phonegap-1.4.1.js"></script>
+	<script type="text/javascript" src="../cordova-2.3.0.js"></script>
 	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<!-- debugging http://debug.phonegap.com/client/#olegflo -->
-	<script src="http://debug.phonegap.com/target/target-script-min.js#olegflo"></script>
+	
 </head>
 <body onload="init();">
+	
+	
 	<p>PhoneGap status: <span id="phoneGapStatus"></span></p>
 	<p>Application settings:</p>
 	<ul>
+		<li>Echo: <code id="echoTag"></code></li>
 		<li>App id: <code id="appId"></code></li>
 		<li>Owner id: <code id="ownerId"></code></li>
 		<li>Auth key: <code id="authKey"></code></li>
@@ -22,16 +24,7 @@
 	<ul id="fusers"></ul>
 	
 	
-	<p>Application users <span id="usersCount"></span>:</p>
-	<ul id="users"></ul>
-
-	<p>Authenticate existing user</p>
-	<p>
-		<input type="text" id="login" placeholder="Login" /><br />
-		<input type="text" id="password" placeholder="Password" /><br />
-		<input type="button" id="auth" value="Authenticate" />
-	</p>
-
+	
 	
 </body>
 </html>

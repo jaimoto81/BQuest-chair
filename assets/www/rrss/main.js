@@ -7,9 +7,11 @@ var tweet_config = {
 
 // Script runs main() when when PhoneGap is fully loaded.
 // http://docs.phonegap.com/en/1.4.1/phonegap_events_events.md.html#deviceready
+
 function init() {
 	document.addEventListener("deviceready", main, true);
 	$(document).ready(main);
+	
 }
 
 function main() {
@@ -20,11 +22,26 @@ function main() {
 	$('#authSecret').html(tweet_config.authSecret);
 	
 	authApp(appHasToken, errorCallback);
+	
+}
+
+
+function test(){
+	alert('test');
+ 	
+	
+	window.plugins.echo("echome", function(echoValue) {
+    	alert(echoValue == "echome"); // should alert true.
+	});
+	
+ 	       
+
 }
 
 // Authenticate specified QuickBlox application.
 // Calls successCallback if finished successfully, and errorCallback if not.
 function authApp(successCallback, errorCallback) {
+	test();
 	var s = getSignature(); // gets signature
 	alert('signature ' + s );
 	// See more documentation on the wiki -- http://wiki.quickblox.com/Authentication_and_Authorization#API_Session_Creation
@@ -72,7 +89,7 @@ function getAllUsers(token) {
 		headers: {
         	"Content-Type":"application/json",
         	"QuickBlox-REST-API-Version":"0.1.1",
-        	"QB-Token":token
+        	"tweet_config-Token":token
     	},
     	success: function(response) {
 			alert('[DEBUG] Server Facebook response: ' + response.total_entries);
@@ -109,7 +126,7 @@ function authUser(token) {
 		headers: {
         	"Content-Type":"application/json",
         	"QuickBlox-REST-API-Version":"0.1.1",
-        	"QB-Token":token
+        	"tweet_config-Token":token
     	},
 		url: url,
 		data: data,
@@ -143,8 +160,8 @@ function getSignature() {
 	var timestamp = Math.round((new Date()).getTime() / 1000); // Gets unix timestamp (http://en.wikipedia.org/wiki/Unix_time) 
 
 	// Creating message where parameters are sorted by alphabetical order.
-	var message = 'app_id=' + QB.appId + '&auth_key=' + QB.authKey + '&nonce=' + nonce + '&timestamp=' + timestamp;
-	var secret = QB.authSecret;
+	var message = 'app_id=' + tweet_config.appId + '&auth_key=' + tweet_config.authKey + '&nonce=' + nonce + '&timestamp=' + timestamp;
+	var secret = tweet_config.authSecret;
 	// Encrypting message with secret key from QuickBlox application parameters.
 	var hmac = Crypto.HMAC(Crypto.SHA1, message, secret);
 	
