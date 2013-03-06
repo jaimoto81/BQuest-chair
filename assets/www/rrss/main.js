@@ -27,15 +27,10 @@ function main() {
 
 
 function test(){
-	alert('test');
- 	
-	
-	window.plugins.echo("echome", function(echoValue) {
-    	alert(echoValue == "echome"); // should alert true.
+	//alert('test');
+	window.echo("Hello", function(echoVal){
+		alert(echoVal);
 	});
-	
- 	       
-
 }
 
 // Authenticate specified QuickBlox application.
