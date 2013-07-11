@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		
+		<!-- menu -->
+        <!--
+		<link rel="stylesheet" href="menu-files/reset.css">
+        <link rel="stylesheet" href="menu-files/main.css">
+        <link rel="stylesheet" href="menu-files/css.css">
+        <script>
+			// iOS viewport scaling bug fix, by @mathias, @cheeaun and @jdalton
+            (function(doc){var addEvent='addEventListener',type='gesturestart',qsa='querySelectorAll',scales=[1,1],meta=qsa in doc?doc[qsa]('meta[name=viewport]'):[];function fix(){meta.content='width=device-width,minimum-scale='+scales[0]+',maximum-scale='+scales[1];doc.removeEventListener(type,fix,true);}if((meta=meta[meta.length-1])&&addEvent in doc){fix();scales=[.25,1.6];doc[addEvent](type,fix,true);}}(document));
+        </script>
+        <!-- menu -->
+        <script type="text/javascript" charset="utf-8" src="js/cordova-2.3.0.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/silla.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type='text/javascript' src='js/jquery.min.js'></script>
+		<script type="text/javascript" src="js/iScroll.js"></script>
+		<script type="text/javascript" src="js/jScroll.js"></script>
+        <script type="text/javascript" src="js/pauta.js"></script>
+        <script type="text/javascript">
+			var myScroll;
+
+			$(document).ready(function() {
+				myScroll = new iScroll('wrapper');
+			});
+
+			google.load("feeds", "1");
+			function initialize() {
+                //Main de Pauta
+                main();
+              
+                var url="http://www.lasillavacia.com/rss.xml?"+  Math.floor((Math.random()*100000)+1);;				
+				var feed = new google.feeds.Feed(url);				
+				// var feed = new google.feeds.Feed("http://fastpshb.appspot.com/feed/1/fastpshb");
+				feed.setNumEntries(12);
+				// Request the results in XML
+				feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
+
+				feed.load(function(result) {
+					if (!result.error) {
+						var container = document.getElementById("columns");
+						var articulo = document.getElementById("columns-nota");
+						// $('#container').innerHTML = '';
+						//container.innerHTML = '';
+						var items = result.xmlDocument.getElementsByTagName('item');
+
+
+						//Ocultar Scroller
+						var scroll = document.getElementById('wrapper');
+                		scroll.className = 'hidden';
+						/*for (var i = 0; i < items.length; i++) {
+								var item = items[i];
+							var title = item.getElementsByTagName('title')[0].firstChild.nodeValue;
+							alert(title);
+						}*/
+
+						//Shuffle Array
+						//for (var rnd, tmp, i = it.length; i; rnd = parseInt(Math.random() * i), tmp = it[--i], it[i] = it[rnd], it[rnd] = tmp);
+						
+						//Separacion del RSS en Historias y Querido Diario
+						var itemsHistorias= new Array();
+						var itemsQueridoD= new Array();
+						var h=0;
+						var q=0;
+						for (var i =0 ; i <items.length; i++) {
+							var item = items[i];
+							var title = item.getElementsByTagName('title')[0].firstChild.nodeValue;
+							//alert(title);
+							
+							var cat = typeof item.getElementsByTagName('category')[0]=== "undefined"?"cat":item.getElementsByTagName('category')[0].firstChild.nodeValue;
+							//alert(cat);
+							if(cat.toUpperCase()=="Historias".toUpperCase()){
+								itemsHistorias[h]=item;
+								h++;
+								//alert("Added Historias");
+							}else if(cat.toUpperCase()=="Querido diario".toUpperCase()){
+								itemsQueridoD[q]=item;
+								q++;
+								//alert("Added QueridoD");
+							}
+						}
+						
+						//Variables para manejar el onClick de las noticias de Querido Diario e Historias
+						var itemsToHandlers= new Array();
+						var hand=0;
+						//-------------------------------------------------------------------------------
+						
+						//Iteracion para añadir noticias Querido Diario
+						
+						for (var i =0 ; i <2; i++) {
+							var itemQ = itemsQueridoD[i];
+							// Get the title from the element.  firstChild is the text node containing
+							// the title, and nodeValue returns the value of it.
+							var title = itemQ.getElementsByTagName('title')[0].firstChild.nodeValue;
+							var desc = itemQ.getElementsByTagName('description')[0].firstChild.nodeValue;
+							var tempo = itemQ.getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+							var link = itemQ.getElementsByTagName('link')[0].firstChild.nodeValue;
+							var hits = itemQ.getElementsByTagName('hits')[0].firstChild.nodeValue;
+							
+							
+						
+			
+							var seccion = item.getElementsByTagName('category')[0].firstChild.nodeValue;
+							//var seccion =cat;
+							//Calculo de horas de publicacion a partir de la fecha en el RSS
+							var d = new Date(tempo);
+							var hoy=new Date();
+							var diasTempo=horasDiferencia(d,hoy);
+							
+							
+							
+								var div = document.createElement("div");
+								div.className = "grid";
+								div.id = "feed" + (i + 1) + "-1";
+								//Arreglo para identificar los div que deben tener handler (click a una nota)
+								itemsToHandlers[hand]=div.id;
+								hand++;
+								var idfeed=i + 1+"-1";
+								var subdiv = document.createElement("div");
+								subdiv.className="tituloText";
+                                //Modificacion debido a que el titulo viene como html, se comenta esta linea y se adiciona el title como innerHtml.
+								//subdiv.appendChild(document.createTextNode(title));
+								subdiv.innerHTML=title;
+								/*var divimagen = document.createElement("div");
+								divimagen.innerHTML="http://farm9.staticflickr.com/8541/8693507662_cfb9a76dc6_o.jpg";
+								subdiv.appendChild(divimagen);	*/
+								// Append the title to the page
+								//subdiv.appendChild(document.createElement('br'));
+								// Add a new line
+								//subdiv.appendChild(document.createElement('br'));
+								// Add a new line
+								//var subdiv1 = document.createElement("div");
+								//subdiv1.innerHTML = desc;
+								var subdivTempo = document.createElement("div");
+								subdivTempo.className="tempo";
+								subdivTempo.innerHTML =diasTempo;
+								var subdivTempoNota = document.createElement("div");
+								subdivTempoNota.className="tempo";
+								subdivTempoNota.innerHTML =diasTempo;
+								
+								var subdivVistas = document.createElement("div");
+								subdivVistas.className="vistas";
+								subdivVistas.innerHTML =hits ;
+								var subdivVistasNota = document.createElement("div");
+								subdivVistasNota.className="vistas";
+								subdivVistasNota.innerHTML =hits ;
+								
+								div.appendChild(subdiv);
+								div.appendChild(subdivTempo);
+								div.appendChild(subdivVistas);
+								//div.appendChild(subdiv1);
+								//div.onclick=hide;
+								container.appendChild(div);
+								
+							
+									//div del articulo
+							
+
+									articulo.className = "hidden";
+									var nota = document.createElement("div");
+									nota.className = "hidden";
+									nota.id = "feed-nota" + (i + 1) + "-1";
+									
+									//Titulo 
+									var tituloArticulo = document.createElement('div');
+									tituloArticulo.className = "tituloText";
+									tituloArticulo.innerHTML = title;
+								  
+									//nota.appendChild(document.createTextNode(title));
+								  
+									//Articulo 
+									var texto_articulo = document.createElement('div');
+									texto_articulo.className = "articuloText";
+									texto_articulo.innerHTML = desc;
+									texto_articulo.onclick= function() {
+										//alert('Documento ' + $(document).height());
+										var altura = $(document).height();
+										$('#columns-nota').css('height', altura+'px');
+										myScroll.refresh();
+									};
+								  
+									
+									//RRSS
+									var subdivRrss = document.createElement("div");
+									subdivRrss.className="rrss";
+									subdivRrss.onclick= function() {
+
+									  shareTitle(title, link);
+									  //hide();
+									};
+									
+									nota.appendChild(subdivTempoNota);
+									nota.appendChild(subdivVistasNota);
+									nota.appendChild(subdivRrss);
+									nota.appendChild(tituloArticulo);
+									nota.appendChild(texto_articulo);
+
+									articulo.appendChild(nota);
+	
+								//clone.css('height', (Math.floor(Math.random()*5)+1)*100);
+								//clone.attr('data-size', Math.floor(Math.random()*3)+1);
+								//$('#container').append(div);
+							
+						}
+						
+						//Iteracion para añadir noticias Historias
+						
+						for (var i =0 ; i <2; i++) {
+							var itemH = itemsHistorias[i];
+							var k=i+10;
+							// Get the title from the element.  firstChild is the text node containing
+							// the title, and nodeValue returns the value of it.
+							var title = itemH.getElementsByTagName('title')[0].firstChild.nodeValue;
+							var desc = itemH.getElementsByTagName('description')[0].firstChild.nodeValue;
+							var tempo = itemH.getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+							var link = itemH.getElementsByTagName('link')[0].firstChild.nodeValue;
+							var hitsHistorias = typeof itemH.getElementsByTagName('hits')[0]==="undefined"?"235" :itemH.getElementsByTagName('hits')[0].firstChild.nodeValue;							
+							var seccion = itemH.getElementsByTagName('category')[0].firstChild.nodeValue;
+							//var autor = itemH.getElementsByTagName('creator')[0]==="undefined"?"Sin autor":itemH.getElementsByTagName('creator')[0].firstChild.nodeValue;
+			var autor="Sin Autor";
+
+							//Calculo de horas de publicacion a partir de la fecha en el RSS
+							var d = new Date(tempo);
+							var hoy=new Date();
+							var diasTempo=horasDiferencia(d,hoy);
+							
+							
+								var div = document.createElement("div");
+								div.className = "grid";
+								div.id = "feed" + (k + 1) + "-1";
+								//Arreglo para identificar los div que deben tener handler (click a una nota)
+								itemsToHandlers[hand]=div.id;
+								hand++;
+								var subdiv = document.createElement("div");
+								subdiv.className="tituloTextGrande";
+                                //Modificacion debido a que el titulo viene como html, se comenta esta linea y se adiciona el title como innerHtml.
+								//subdiv.appendChild(document.createTextNode(title));
+								subdiv.innerHTML=title;
+								
+                               
+								
+								
+								
+									//Obtener la primera imagen via JQuery
+								$html      = $(desc);
+								$imagenes    = $html.find('img') ;
+								var tmp = document.createElement("div");
+								//	var imagen =$(('<div></div>')).append(desc).find('img');
+								var imagen=$imagenes;
+								var srcImagen="indefinido";
+							
+								var divimagen = document.createElement("div");
+								for (var u = 0;u< imagen.length ;u++){
+									if(imagen[u].align!="absMiddle"){
+										var estaImagen = typeof imagen[u]=== "undefined"?0:imagen[u];
+										
+										if(estaImagen!==0){
+									  		tmp.appendChild(estaImagen);
+									  		estaImagen.removeAttribute("style");
+									  		estaImagen.className="imagen-historia";
+									  		srcImagen=estaImagen.src;
+									  		 divimagen.appendChild(estaImagen);
+									  		//tmp.appendChild(estaImagen);
+									  		//salida para quebrar el for y terminar.
+									  		u=imagen.length;
+								  		}
+								  		
+								  	}
+								};
+									
+								 console.log(tmp.innerHTML);
+								 
+								// divimagen.appendChild(imagenHistorias[1]);
+								
+								// var imagenHistoria = document.createElement("img");
+								// imagenHistoria.src="http://farm9.staticflickr.com/8488/8288312629_50667f6926_o.jpg";
+								// imagenHistoria.className="imagen-historia";
+								// divimagen.appendChild(imagenHistoria);	
+						
+								var subdivTempo = document.createElement("div");
+								subdivTempo.className="tempo";
+								subdivTempo.innerHTML =diasTempo;
+								
+								var subdivTempoNota = document.createElement("div");
+								subdivTempoNota.className="tempoNota";
+								subdivTempoNota.innerHTML =diasTempo;
+								
+								var subdivVistas = document.createElement("div");
+								subdivVistas.className="vistas";
+								subdivVistas.innerHTML =hitsHistorias ;
+								
+								var subdivVistasNota = document.createElement("div");
+								subdivVistasNota.className="vistasNota";
+								subdivVistasNota.innerHTML =hitsHistorias ;
+								
+								var subdivAutor = document.createElement("div");
+								subdivAutor.className="autorNota";
+								subdivAutor.innerHTML =autor;
+								
+								var subdivSeccion=document.createElement("div");
+								subdivSeccion.innerHTML =seccion;
+								subdivSeccion.className="seccion";
+								
+								
+								
+								div.appendChild(subdivSeccion);
+								div.appendChild(subdivTempo);
+								div.appendChild(subdivVistas);
+								div.appendChild(divimagen);	
+								div.appendChild(subdiv);
+								//div.appendChild(subdiv1);
+								container.appendChild(div);
+							
+							
+								//div del articulo
+							
+
+									articulo.className = "hidden";
+									var nota = document.createElement("div");
+									nota.className = "hidden";
+									nota.id = "feed-nota" + (k + 1) + "-1";
+									
+									//Titulo 
+									var tituloArticulo = document.createElement('div');
+									tituloArticulo.className = "tituloTextNota";
+									tituloArticulo.innerHTML = title;
+								  
+									//nota.appendChild(document.createTextNode(title));
+								  
+									//Articulo 
+									var texto_articulo = document.createElement('div');
+									texto_articulo.className = "articuloText";
+									texto_articulo.innerHTML = desc;
+									texto_articulo.onclick= function() {
+										//alert('Documento ' + $(document).height());
+										var altura = $(document).height();
+										$('#columns-nota').css('height', altura+'px');
+										myScroll.refresh();
+									};
+								  
+									
+									//RRSS
+									var subdivRrssH = document.createElement("div");
+									subdivRrssH.className="rrss";
+									subdivRrssH.onclick= function() {
+									  shareTitle(title,link);
+									  //hide();
+									};
+									
+									
+									nota.appendChild(subdivRrssH);									
+									nota.appendChild(tituloArticulo);
+									nota.appendChild(subdivAutor);
+									nota.appendChild(subdivTempoNota);
+									nota.appendChild(subdivVistasNota);
+									// if(i==1){
+													// var tmp = document.createElement("div");
+ // tmp.appendChild(texto_articulo);
+// console.log(tmp.innerHTML);
+// }
+									nota.appendChild(texto_articulo);
+
+									articulo.appendChild(nota);
+									
+									
+						}
+						
+						
+						for (var i =0 ; i <itemsToHandlers.length; i++) {
+								var sEventType = 'click';
+								//var b1 = document.getElementById("feed" + (i + 1) + "-1");
+							var b1=document.getElementById(itemsToHandlers[i]);					
+							addEventHandler(b1,sEventType,hide);
+							
+						}
+
+					}
+				});
+			}
+			google.setOnLoadCallback(initialize);
+			
+			
+			
+            function hideNota(){
+            	window.location = "index6.html";
+            	/*
+                var item = document.getElementById('columns-nota');
+                item.className = 'hidden';
+                
+                
+                item.style.WebkitTransform = "translate(0px,0px)";
+				
+                
+            	var item = document.getElementsByClassName("unhidden");
+            	for (var i =0 ; i <item.length; i++) {
+               	 item[i].className = 'hidden';
+               }
+            	var item = document.getElementById('columns');
+                item.className = 'unhidden';
+                
+                var item = document.getElementById('wrapper');
+                item.className = 'hidden';
+                
+                var nota = document.getElementById('feed-nota1-1');
+                nota.className = 'hidden'
+                
+                var nota = document.getElementById('feed-nota2-1');
+                nota.className = 'hidden'
+                		
+                var nota = document.getElementById('feed-nota11-1');
+                nota.className = 'hidden'
+                    		
+                var nota = document.getElementById('feed-nota12-1');
+                nota.className = 'hidden'    
+                */
+                        
+            }
+		</script>
+
+		<!-- MENU -->
+		<script type="text/javascript">
+		var originalNavClasses;
+
+		function toggleNav() {
+		    var elem = document.getElementById('navigation_list');
+		    var classes = elem.className;
+		    if (originalNavClasses === undefined) {
+		        originalNavClasses = classes;
+		    }
+		    elem.className = /expanded/.test(classes) ? originalNavClasses : originalNavClasses + ' expanded';
+		}
+		</script>
+		
+		
+		
+		<!-- iPad/iPhone specific css below, add after your main css >
+         <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
+         <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />
+         -->
+        <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta name="viewport" content="width=800"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/silla-new.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+	<body>
+	<div id="head">
+                <img id="superior" src="img/superior@2x.png"/>
+                <img id="volver" src="img/volver@2x.png" onclick="window.location = 'index6.html'"/>
+                <img id="sillalogo" src="img/sillalogo@2x.png"/>
+                <img id="buscar" src="img/busqueda@2x.png" onclick="open_win('http://www.lasillavacia.com/')"/>
+                <div class="block-touch"></div>
+                <nav id="navigation">
+                  <a class="menu_button" href="#footer_nav" onclick="toggleNav(); return false;"></a>
+                  <ul id="navigation_list" role="navigation">
+                    <li onclick="open_win('http://www.lasillavacia.com/historias')"><a href="index6.html"  class="item1">HISTORIAS</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/queridodiario')"><a href="index6.html" class="item2">QUERIDO DIARIO</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/datanews')"><a href="index6.html"   class="item3">H&Aacute;GAME EL CRUCE</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/blogs')"><a href="index6.html"  class="item4">EL BLOGUEO</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/butaca')"><a href="index6.html" class="item3">LA BUTACA</a></li>
+                    <li><a href="#" class="item2">SALA DE EST&Eacute;TICA</a></li>
+                    <li onclick="open_win('http://www.proyectorosa.com/blog/')"><a href="index6.html" class="item1">PROYECTO ROSA</a></li>
+                 </ul>
+                </nav>
+        </div>	
+		<div id="wrapper-1">
+			
+			<div id="columns">
+				<div id="pauta">
+					
+				</div>
+				<div id="redes">
+					<div class="twitter-home4">
+	                    <a class="twitter-timeline" width="300" height="25" data-chrome="nofooter noscrollbar noheader transparent" href="https://twitter.com/lasilladice"  data-widget-id="344674302534238209"></a>
+	                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                	</div>
+                	<div class="twitter-fav-home4">
+	                    <a class="twitter-timeline" width="300" height="20" href="https://twitter.com/lasillavacia/favorites"  data-chrome="nofooter noscrollbar noheader transparent" data-widget-id="347747823762157569">Tweets</a>
+	                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	                </div>
+				
+				</div>
+			</div>
+		</div>
+		<div id="wrapper" class='wrapper'>
+			
+				<div id="columns-nota">
+				</div>
+			
+		</div>	
+		<div id="foot">
+				<img id="inferior" src="img/barra_inferior@2x.png"/>
+				<img id="inferiorLive" src="img/botonLIFEoff@2x.png" onclick="window.location.href='vivo.html'"/>
+		</div>
+	</body>
+</html>
