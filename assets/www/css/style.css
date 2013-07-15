@@ -1,0 +1,74 @@
+#navigation {
+    padding: 1px;
+    color: #fff;
+    text-align: center;
+    width: 593px;
+    position:absolute;
+	top:12px;
+	left:1450px;
+	z-index: 1;
+}
+#navigation ul {
+    display: none;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+#navigation ul.expanded {
+    display: block;
+}
+#navigation li a {
+    display: block;
+    padding: 10px 0;
+    border-top: 1px solid #FFF;
+    font-size: 38pt;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: #FFF;
+    text-decoration: none;
+}
+				
+#navigation .item1{
+	background-color: #31bbc2;
+}
+				
+#navigation .item2{
+	background-color: #35c8cf;
+}
+				
+#navigation .item3{
+	background-color: #38d4dc;
+}
+				
+#navigation .item4 {
+	background-color: #4af7ff;
+	color: #31bbc2;
+}
+
+.menu_button {
+    display: block;
+    text-align: right;
+    text-decoration: none;
+    background-image:url("../img/secciones@2x.png");
+	background-repeat: no-repeat;
+	background-position:460px 1px;
+	height: 70px;
+	
+}
+.menu_button:hover {
+    color: #31bbc2;
+    text-decoration: none;
+}
+
+.block-touch { /* Estilo para bloquear touch */
+	padding: 0px;
+    display: block;
+    position: relative;
+	top: 5px;
+	left: 1400px;
+    height: 80px; /* set to the height of the image.*/
+    width: 460px; /* set to the width of the image.*/
+    z-index: 2;
+    background-position: 0px 80px;
+	
+}

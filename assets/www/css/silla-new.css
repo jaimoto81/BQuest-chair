@@ -1,0 +1,1554 @@
+			body {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				padding: 0px;
+				margin: 0px;
+                -webkit-user-select:none;
+			    -webkit-text-size-adjust:none;
+			}
+			h2,h3 {
+				margin-top: 0px;
+				padding-top: 0px;
+			}
+			div#head {
+				left:0px;
+				width:100%;
+				height:86px;
+				top: 0px;
+				position: absolute;
+				z-index:2;
+			}
+			/*div#wrapper {
+                position:absolute;
+                margin-left:auto;
+                margin-right:auto;
+                top: 0px;
+                width:2048px;
+                background-color: #FFFFFF;
+            }
+            */
+			div#columns {
+				width: 2048px;
+				position: relative;
+				top: 86px;
+				background-color: #CCCCCC;
+			}
+			div#columns-nota {
+				width: 2048px;
+				top: 86px;
+				background-color: #FFFFFF;
+				height: 1000px;
+
+				position:absolute; z-index:1;
+				/*	-webkit-touch-callout:none;*/
+				-webkit-tap-highlight-color:rgba(0,0,0,0);
+				width:100%;
+				padding:0;
+				}
+			div#feed1-1{
+				position:absolute;
+				left:0px;
+				width:510px;
+				height:344px;
+				background-color: #e6e8e7;
+				top: 0px;			
+				border-right:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+			}
+			div.tituloText{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				height: 137px;
+				
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 21px;
+				margin-top: 30px;
+				text-decoration: none;
+				line-height: 100%;
+			}
+			
+			div.tagsHistorias{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#31BBC2;
+				height: 140px;
+				width:1700px;
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 50px;
+				margin-top: 80px;
+				text-decoration: none;
+				line-height: 100%;
+			}
+			div.hilosHistorias{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#31BBC2;
+				height: 80px;
+				width:1700px;
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 50px;
+				margin-top: 16px;
+				text-decoration: none;
+				line-height: 100%;
+			}
+			
+			div#borderHistorias {		
+		
+			background-color: #FFFFFF;			
+			position:absolute;
+			left:50px;
+			
+			height:3px;				
+			width: 1900px;			
+			top: 300px;					
+			border-bottom: 3px solid #b7b9bd;
+			}
+
+			div.articuloText{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 24pt;
+				color:#000000;
+				position: relative;
+			}
+			
+			div.articuloTextQueridoDiario{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 24pt;
+				color:#000000;
+				position: relative;
+			}
+			
+			div.tituloTextGrande{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#FFFFFF;
+				margin-left: 39px;
+				margin-top: 680px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-11{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#FFFFFF;
+				margin-left: 39px;
+				margin-top: 680px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-12{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#FFFFFF;
+				margin-left: 39px;
+				margin-top: 680px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;
+				position: absolute;
+			}
+			
+			
+			div.tituloTextGrande-13{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 516px;
+				margin-top: 20px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-14{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#FFFFFF;
+				margin-left: 39px;
+				margin-top: 380px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-15{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 516px;
+				margin-top: 20px;
+				margin-right:61px;
+				height:120px;
+				line-height:100%;	
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-16{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#FFFFFF;
+				margin-left: 39px;
+				margin-top: 380px;
+				margin-right:61px;
+				line-height:100%;
+				height:120px;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-17{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 16px;
+				margin-top: 326px;
+				margin-right:16px;
+				line-height:100%;
+				height:120px;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-18{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 16px;
+				margin-top: 326px;
+				margin-right:16px;
+				line-height:100%;
+				height:120px;
+				position: absolute;
+			}
+		
+		
+		div.tituloTextGrande-19{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 16px;
+				margin-top: 326px;
+				margin-right:16px;
+				line-height:100%;
+				height:120px;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-20{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				margin-left: 16px;
+				margin-top: 326px;
+				margin-right:16px;
+				line-height:100%;
+				height:120px;
+				position: absolute;
+			}
+			
+			div.tituloTextGrande-21{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 32pt;
+				color:#000000;
+				height: 137px;
+				
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 21px;
+				margin-top: 30px;
+				text-decoration: none;
+				line-height: 100%;
+			}
+			
+			
+			.vistas{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: right;
+				background-color: #b9dfe2;
+				background-image:url("../img/icono_vistas@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+			}
+			.tempo{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: right;
+				background-color: #CCCCCC;
+				background-image:url("../img/icono_reloj@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+			}
+			.seccion{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: left;
+				padding-left: 20px; 
+				background-color: #31bbc2;
+				
+			}
+            .rrss{
+				background-color: #FFFFFF;
+				background-image:url("../img/rrss@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+			}
+			
+			.rrssQ{
+				background-color: #FFFFFF;
+				background-image:url("../img/rrss@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+			}
+			/*Home 4*/
+			
+			div#feed1-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed1-1 .vistas	{				
+				height:46px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			div#feed2-1 {
+			position:absolute;
+			left:512px;
+			width:510px;
+			height:344px;
+			background-color: #e6e8e7;
+			top: 0px;
+			border-right:2px solid #b7b9bd;
+			border-bottom: 3px solid #b7b9bd;
+			}
+			div#feed2-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed2-1 .vistas	{				
+				height:46px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			
+			
+			
+			div#feed12-1{
+			position:absolute;
+			width:1024px;
+			height:943px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 0px;
+			border-bottom: 3px solid #b7b9bd;
+			}
+			
+			div#feed12-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed12-1 .vistas{				
+				height:47px;
+				width: 356px;
+				margin-left:512px;
+				margin-top:30px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed12-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed11-1{
+			position:absolute;
+			width:1022px;
+			height:943px;
+			background-color: #e6e8e7;	
+			left: 0px;
+			top: 347px;
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed11-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed11-1 .vistas	{				
+				height:47px;
+				width: 356px;
+				margin-left:512px;
+				margin-top:30px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed11-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			/*Home 6*/
+			div#feed3-1{
+				position:absolute;
+				left:0px;
+				width:510px;
+				height:344px;
+				background-color: #e6e8e7;
+				top: 629px;			
+				border-right:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+			}
+			
+			div#feed3-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed3-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			div#feed4-1 {
+			position:absolute;
+			left:512px;
+			width:510px;
+			height:344px;
+			background-color: #e6e8e7;
+			top: 629px;
+			border-right:2px solid #b7b9bd;
+			border-bottom: 3px solid #b7b9bd;
+			}
+			div#feed4-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed4-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			
+			
+			div#feed13-1{
+			position:absolute;
+			width:1024px;
+			height:314px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 0px;
+			border-bottom: 3px solid #b7b9bd;
+			}
+			
+			div#feed13-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top: 240px;
+				position: absolute;
+			}
+			
+			div#feed13-1 .vistas	{				
+				height:46px;
+				width: 165px;
+				margin-left:703px;
+				margin-top:240px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed13-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:240px;
+				position: absolute;
+			}
+			
+			div#feed14-1{
+			position:absolute;
+			width:1022px;
+			height:626px;
+			background-color: #e6e8e7;	
+			left: 0px;
+			top: 0px;
+			/*top: 347px;*/
+			border-bottom: 3px solid #b7b9bd;
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed14-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed14-1 .vistas{				
+				height:46px;
+				width: 356px;
+				margin-left:512px;
+				margin-top:30px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed14-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed15-1{
+			position:absolute;
+			width:1022px;
+			height:314px;
+			background-color: #e6e8e7;	
+			left: 0px;
+			top: 976px;
+			/*top: 347px;*/			
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed15-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top: 251px;
+				position: absolute;
+			}
+			
+			div#feed15-1 .vistas	{				
+				height:46px;
+				width: 165px;
+				margin-left:703px;
+				margin-top:251px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			/*hay que quitar esta seccion*/
+			div#feed15-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			
+			div#feed16-1{
+			position:absolute;
+			width:1024px;
+			height:627px;
+			background-color: #e6e8e7;	
+			left: 1024px;
+			top: 663px;
+			/*top: 347px;*/			
+			}
+			
+			div#feed16-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:882px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed16-1 .vistas{				
+				height:46px;
+				width: 356px;
+				margin-left:512px;
+				margin-top:30px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed16-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			
+		/*Home 8*/
+			div#feed5-1{
+				position:absolute;
+				left:1024px;
+				width:510px;
+				height:344px;
+				background-color: #e6e8e7;
+				top: 944px;			
+				border-right:2px solid #b7b9bd;				
+			}
+			
+			div#feed5-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed5-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			div#feed6-1 {
+			position:absolute;
+			left:1536px;
+			width:512px;
+			height:344px;
+			background-color: #e6e8e7;
+			top: 944px;					
+			}
+			div#feed6-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed6-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#pauta-home8{
+			position:absolute;
+			width:512px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1536px;
+			top: 0px;		
+			border-bottom: 3px solid #b7b9bd;
+			}
+			
+			div#redes-home8{
+			position:absolute;
+			width:1024px;
+			height:595px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 347px;
+			border-bottom: 3px solid #b7b9bd;
+
+			}
+			
+			
+			div#feed17-1{
+			position:absolute;
+			width:510px;
+			height:643px;
+			background-color: #e6e8e7;	
+			left: 0px;
+			top: 0px;
+			/*top: 347px;*/
+			border-bottom: 3px solid #b7b9bd;
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed17-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:371px;
+				margin-top:580px;
+				position: absolute;
+			}
+			
+			div#feed17-1 .vistas{				
+				height:47px;
+				width: 165px;
+				margin-left:190px;
+				margin-top:580px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed17-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			
+			div#feed18-1{
+			position:absolute;
+			width:510px;
+			height:643px;
+			background-color: #e6e8e7;	
+			left: 512px;
+			top: 0px;
+			/*top: 347px;*/
+			border-bottom: 3px solid #b7b9bd;
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed18-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:371px;
+				margin-top:580px;
+				position: absolute;
+			}
+			
+			div#feed18-1 .vistas{				
+				height:47px;
+				width: 165px;
+				margin-left:190px;
+				margin-top:580px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed18-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+				div#feed19-1{
+			position:absolute;
+			width:510px;
+			height:644px;
+			background-color: #e6e8e7;	
+			left: 0px;
+			top: 646px;
+			/*top: 347px;*/			
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed19-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:371px;
+				margin-top:580px;
+				position: absolute;
+			}
+			
+			div#feed19-1 .vistas{				
+				height:47px;
+				width: 165px;
+				margin-left:190px;
+				margin-top:580px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+			div#feed19-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			
+			div#feed20-1{
+			position:absolute;
+			width:510px;
+			height:644px;
+			background-color: #e6e8e7;	
+			left: 512px;
+			top: 646px;
+			/*top: 347px;*/
+			border-right:2px solid #b7b9bd;
+			}
+			
+			div#feed20-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:371px;
+				margin-top:580px;
+				position: absolute;
+			}
+			
+			div#feed20-1 .vistas{				
+				height:47px;
+				width: 165px;
+				margin-left:190px;
+				margin-top:580px;
+				margin-right: 19px;
+				position: absolute;
+			}
+			
+				
+			div#feed20-1 .seccion	{	
+			height:46px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:30px;
+				position: absolute;
+			}
+			
+			div#feed21-1{
+				position:absolute;
+				left:1024px;
+				width:510px;
+				height:344px;
+				background-color: #e6e8e7;
+				top: 0px;			
+				border-right:2px solid #b7b9bd;		
+				border-bottom: 3px solid #b7b9bd;		
+			}
+			
+			div#feed21-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:281px;
+				position: absolute;
+			}
+			
+			div#feed21-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:281px;
+				position: absolute;
+			}
+			
+			div#borderQueridoDiario {		
+		
+			background-color: #FFFFFF;			
+			position:absolute;
+			left:50px;
+			
+			height:3px;				
+			width: 1400px;			
+			top: 240px;					
+			border-bottom: 3px solid #b7b9bd;
+			}
+			
+			div.tagsQueridoDiario{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#31BBC2;
+				height: 157px;
+				width:1400px;
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 50px;
+				margin-top: 80px;
+				text-decoration: none;
+				line-height: 100%;
+			}
+			
+			div#seccionQ {
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+			font-size: 28pt;
+			color:#FFFFFF;
+			text-align: left;
+			padding-left: 20px; 
+			background-color: #31bbc2;
+			
+			position:absolute;
+			left:1520px;
+			width:492px;
+			height:50px;
+			
+			top: 263px;				
+			
+			}
+			
+			div#seccionQborder {		
+		
+			background-color: #FFFFFF;
+			
+			position:absolute;
+			left:1520px;
+			width:512px;
+			height:3px;
+			
+			top: 316px;					
+			border-bottom: 3px solid #b7b9bd;
+			}
+			
+			
+			
+			div#feed7-1 {
+			position:absolute;
+			left:1520px;
+			width:512px;
+			height:344px;
+			background-color: #FFFFFF;
+			top: 319px;					
+			border-bottom: 3px solid #b7b9bd;
+			}
+			div#feed7-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed7-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			div#feed8-1 {
+			position:absolute;
+			left:1520px;
+			width:512px;
+			height:344px;
+			background-color: #FFFFFF;
+			top: 666px;				
+			border-bottom: 3px solid #b7b9bd;	
+			}
+			div#feed8-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed8-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			div#feed9-1 {
+			position:absolute;
+			left:1520px;
+			width:512px;
+			height:344px;
+			background-color: #FFFFFF;
+			top: 1013px;					
+			}
+			div#feed9-1 .tempo{				
+				height:47px;
+				width: 123px;
+				margin-left:372px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			div#feed9-1 .vistas	{				
+				height:47px;
+				width: 165px;
+				margin-left:194px;
+				margin-top:112px;
+				position: absolute;
+			}
+			
+			 .imagen-historia{
+			position:absolute;
+			top:94px;
+			left:21px;
+			width: 986px;
+			height: 824px;
+			}
+			
+			 .imagen-historia-11{
+			position:absolute;
+			top:94px;
+			left:21px;
+			width: 986px;
+			height: 824px;
+			}
+			
+			
+			 .imagen-historia-12{
+			position:absolute;
+			top:94px;
+			left:21px;
+			width: 986px;
+			height: 824px;
+			}
+			
+			 .imagen-historia-13{			
+				position: absolute;
+				top: 20px;
+				left: 21px;
+				width: 481px;
+				height: 280px;
+			}
+			
+			
+			 .imagen-historia-14{
+			position:absolute;
+			top:94px;
+			left:21px;
+			width: 986px;
+			height: 507px;
+			}
+			
+			 .imagen-historia-15{			
+				position: absolute;
+				top: 20px;
+				left: 21px;
+				width: 481px;
+				height: 280px;
+			}
+			
+			 .imagen-historia-16{
+			position:absolute;
+			top:94px;
+			left:21px;
+			width: 986px;
+			height: 519px;
+			}
+			
+			 .imagen-historia-17{
+			position:absolute;
+			top:16px;
+			left:16px;
+			width: 478px;
+			height: 294px;
+			}
+			
+			 .imagen-historia-18{
+			position:absolute;
+			top:16px;
+			left:16px;
+			width: 478px;
+			height: 294px;
+			}
+			
+			 .imagen-historia-19{
+			position:absolute;
+			top:16px;
+			left:16px;
+			width: 478px;
+			height: 294px;
+			}
+			
+			 .imagen-historia-20{
+			position:absolute;
+			top:16px;
+			left:16px;
+			width: 478px;
+			height: 294px;
+			}
+			
+				 .imagen-historia-21{
+			position:absolute;
+			top:16px;
+			left:16px;
+			width: 478px;
+			height: 294px;
+			visibility: hidden; display: none;
+			}
+			
+			div#pauta{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 946px;
+			border-right:2px solid #b7b9bd;
+			}
+			div#redes{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1537px;
+			top: 946px;
+			}
+			
+			div#pauta0{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 946px;
+			border-right:2px solid #b7b9bd;
+			}
+			div#redes0{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1537px;
+			top: 946px;
+			}
+			div#pauta-home6{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1024px;
+			top: 316px;
+			border-right:2px solid #b7b9bd;
+			border-bottom: 3px solid #b7b9bd;
+			}
+			div#redes-home6{
+			position:absolute;
+			width:511px;
+			height:344px;
+			background-color: #e6e8e7;
+			left: 1537px;
+			top: 316px;
+			border-bottom: 3px solid #b7b9bd;
+
+			}
+			
+			div#foot {
+			background-color: #99FFFF;
+			width: 100%;
+			clear: both;
+			position: absolute;
+			top: 1376px;
+			height:120px;
+			z-index:2;
+			}
+			
+			
+			.clear {
+			clear:both;
+			}
+			.textoTitulo{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#000000;
+			}
+			img#superior{
+			position:absolute;
+			top:0px;
+			left:0px;
+			}
+			img#volver{
+			position:absolute;
+			top:12px;
+			left:33px;
+			}
+			img#sillalogo{
+			position:absolute;
+			top:12px;
+			left:997px;
+			}
+
+			img#buscar{
+			position:absolute;
+			top:12px;
+			left:1800px;
+			z-index: 3;
+			}
+			img#secciones{
+			position:absolute;
+			top:12px;
+			left:1912px;
+			}
+			img#inferior{
+			position:absolute;
+			top:0px;
+			left:0px;
+			}
+			
+			img#inferiorLive{
+			position:absolute;
+			top:16px;
+			left:16px;
+			z-index:3;
+			}
+			
+			
+            .video{
+                top: 86px;
+                width: 1300px;
+                height: 800px;
+                overflow: visible;
+                position:absolute;
+				background-color: #e6e8e7;
+				border-right:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+           
+			}
+			
+			.video-timeline{
+                top: 215px;
+                left: 1310px;
+                width: 495px;
+                height: 866px;
+                position:absolute;
+				overflow: hidden;
+                background-color: #e6e8e7;
+				border-right:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+                -webkit-transform: rotate(0deg) scale(1.5) skew(0deg) translate(78px);
+           }
+
+           div#twitter-home4{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 80px;
+				top: 55px;
+				border-top:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+				-webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+
+           div#twitter-fav-home4{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 80px;
+				top: 205px;
+				height: 100px;
+                border-top:2px solid #b7b9bd;
+				border-bottom: 2px solid #b7b9bd;
+				overflow: hidden;
+                -webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+
+
+
+           div#twitter-home6{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 80px;
+				top: 55px;
+				border-top:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+				-webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+
+           div#twitter-fav-home6{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 80px;
+				top: 205px;
+				height: 100px;
+                border-top:2px solid #b7b9bd;
+				border-bottom: 2px solid #b7b9bd;
+				overflow: hidden;
+                -webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+
+           div#twitter-home8{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 80px;
+				top: 55px;
+				border-top:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+				-webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+
+           div#twitter-fav-home8{
+           		position:absolute;
+				background-color: #e6e8e7;
+				left: 587px;
+				top: 31px;
+				height: 100px;
+                border-top:2px solid #b7b9bd;
+				border-bottom: 2px solid #b7b9bd;
+				-webkit-transform: rotate(0deg) scale(1.65) skew(0deg) translate(17px);
+           }
+           
+           div#descripcion{
+			    font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 19pt;
+				color:#000000;
+			    top: 540px;
+                left: 640px;
+                width: 590px;
+                height: 480px;
+                z-index: 1;
+                background-color: #e6e8e7;
+			
+			}
+			
+			.video-coverit{
+                top: 805px;
+                width: 1300px;
+                height: 482px;
+                overflow: hidden;
+                position:absolute;
+				background-color: #e6e8e7;
+				border-right:2px solid #b7b9bd;
+				border-bottom: 3px solid #b7b9bd;
+           
+			}
+
+			div#feed-nota{
+                position:relative;
+                width:2048px;
+                height:2022px;
+                background-color: #e6e8e7;
+                left: 0px;
+                top: 110px;
+                border-right:2px solid #b7b9bd;
+                
+                 /* Not working on iOS
+                 max-height: 1200px; /* supply current height here 
+                 height: auto;
+                 overflow: auto;
+                 */
+                
+	        }
+            div .autorNota{
+            	font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: left;
+				padding-left: 20px; 
+				background-color: #31bbc2;
+       
+	
+				height:50px;
+				width: 476px;
+				margin-left:50px;
+				margin-top:300px;
+				position: absolute;
+			}
+			
+            div .vistasNota{
+            	font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: right;
+				padding-right: 10px; 
+				background-color: #b9dfe2;
+				background-image:url("../img/icono_vistas@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+				
+				height:50px;
+				width: 220px;
+				margin-left:944px;
+				margin-top:300px;
+				position: absolute;
+			}
+			
+			div .tempoNota	{
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 28pt;
+				color:#FFFFFF;
+				text-align: right;
+				padding-right: 10px; 
+				background-color: #CCCCCC;
+				background-image:url("../img/icono_reloj@2x.png");
+				background-repeat: no-repeat;
+				background-position:10px 10px;
+				
+				height:50px;
+				width: 356px;
+				margin-left:562px;
+				margin-top:300px;
+				
+				position: absolute;
+			}
+			
+			div#feed-nota .seccion	{
+                height:80px;
+				width: 456px;
+				margin-left:21px;
+				margin-top:20px;
+				position: absolute;
+            }
+            
+            div .rrss	{
+				height:75px;
+				width: 275px;
+				margin-left:1700px;
+				margin-top: 240px;
+				margin-right: 15px;
+				position: absolute;
+			}
+			
+			div .rrssQ	{
+				height:75px;
+				width: 275px;
+				margin-left:1200px;
+				margin-top: 243px;
+				margin-right: 15px;
+				position: absolute;
+			}
+
+			div .tituloTextNota {
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#000000;
+				height: 137px;
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 21px;
+				margin-top: 135px;
+				text-decoration: none;
+				
+				margin-left:50px;
+				margin-top: 160px;
+				width: 1400px;
+				position: absolute;
+			}
+			
+			div .tituloTextNotaHistoria {
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 38pt;
+				color:#000000;
+				height: 137px;
+				/* PARA QUE FUNCIONE SCROLL*/
+				margin-left: 21px;
+				margin-top: 135px;
+				text-decoration: none;
+				
+				margin-left:50px;
+				margin-top: 160px;
+				width: 1700px;
+				position: absolute;
+			}
+
+			div .articuloText {
+				margin-left:50px;
+				margin-top: 360px;
+				width: 1900px;
+				position: absolute;
+				text-align:justify;
+				line-height: 1.6em;
+			}
+			
+			
+			div .articuloTextQueridoDiario {
+				margin-left:50px;
+				margin-top: 523px;
+				width: 1400px;
+				position: absolute;
+				text-align:justify;
+				line-height: 1.6em;
+			}
+			
+			table.piedefoto {
+			    background-color: rgb(242, 242, 242);
+			    color: rgb(102, 102, 102);
+			    margin: 10px;
+			    font-size: 22px;
+			    line-height: 1.6em;
+			}
+            
+            .wrapper {
+                position:absolute;
+                margin-left:auto;
+                margin-right:auto;
+                top: 64px;
+                width:2048px;
+                height:699px;
+
+                background-color: #CCCCCC;
+                z-index:1;
+            }
+            
+            .hidden { visibility: hidden; display: none;}
+            .unhidden { visibility: visible; display: block;}
+            
+            .parent
+            {
+            	    margin:0px;
+		    padding:0px;
+		    height: 536px;
+		    background-color: orange;
+		    border: thick purple solid;
+		    position: relative;
+		}
+
+        .scroller {
+            position:absolute; z-index:1;
+			/*	-webkit-touch-callout:none;*/
+			-webkit-tap-highlight-color:rgba(0,0,0,0);
+			width:100%;
+			padding:0;
+		}
+		
+		.home-widgets .widget-wrapper {
+            min-height:60px;
+        }
+
+        
+
+	.fade{
+    	position: absolute; top:0px; left:0px; width:100%; height:100%;
+        background:transparent;
+        background: linear-gradient(top, rgba( 255, 255, 255, 255 ) 70%, rgba( 120, 120, 120, 100 ) 100% );
+        background: -moz-linear-gradient(top, rgba( 255, 255, 255, 0) 70%, rgba( 120, 120, 120, 100 ) 100% );
+        background: -webkit-linear-gradient( top, rgba( 255, 255, 255, 0 ) 70%, rgba( 120, 120, 120, 100 ) 100% );
+    }
+
+
+
+
+		
+		
+		div.tituloText a:link { color: #000000; text-decoration: none}
+		div.tituloText a:hover { color: #000000; text-decoration: none}
+		div.tituloText a:visited { color: #000000; text-decoration: none}
+		div.tituloTextGrande a:link { color: #FFFFFF; text-decoration: none}
+		div.tituloTextGrande a:hover { color: #FFFFFF; text-decoration: none}
+		div.tituloTextGrande a:visited { color: #FFFFFF; text-decoration: none}
+		
+		div.autorNota a:link { color: #FFFFFF; text-decoration: none}
+		div.autorNota a:hover { color: #FFFFFF; text-decoration: none}
+		div.autorNota a:visited { color: #FFFFFF; text-decoration: none}
+		
+		

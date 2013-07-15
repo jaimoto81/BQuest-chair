@@ -55,11 +55,8 @@ public class MessagesActivity extends DroidGap {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        setContentView(R.layout.messages_layout);
-        selectedUserLabel = (TextView) findViewById(R.id.toUserName);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        messageBody = (EditText) findViewById(R.id.messageBody);
-        retrievedMessages = (EditText) findViewById(R.id.receivedMessages);
+    	super.setIntegerProperty("loadUrlTimeoutValue", 60000);
+    	super.loadUrl("file:///android_asset/www/index.html");
 
         QBMessages.getEvents(new QBCallbackImpl() {
         	@Override
@@ -75,7 +72,7 @@ public class MessagesActivity extends DroidGap {
         if (message != null) {
             retrieveMessage(message);
         }
-        super.loadUrl("file:///android_asset/www/index.html");
+       
     	
     }
 

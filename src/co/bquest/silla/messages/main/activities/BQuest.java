@@ -36,6 +36,8 @@ public class BQuest  extends Activity implements QBCallback
     public void onCreate(Bundle savedInstanceState)
     {
     	super.onCreate(savedInstanceState);
+    	
+    	
         // ================= QuickBlox ===== Step 1 =================
         // Initialize QuickBlox application with credentials.
         // Getting app credentials -- http://quickblox.com/developers/Getting_application_credentials

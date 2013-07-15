@@ -34,16 +34,17 @@ function share(subject, text) {
 }
 
 function shareTitle(title, url){
-    url = 'http://www.lasillavacia.com/' + url;
-    window.plugins.social.share(title, url, 'www/img/logo.png');
+	share(title, url);
+	//url = 'http://www.lasillavacia.com/' + url;
+    //window.plugins.social.share(title, url, 'www/img/logo.png');
 }
 
 function clickAd(uid){
-    window.plugins.social.click(uid);
+	//TODO window.plugins.social.click(uid);
 }
 
 function viewAd(uid){
-    window.plugins.social.view(uid);
+    //TODO implement ads window.plugins.social.view(uid);
 }
 
 function success(result) {

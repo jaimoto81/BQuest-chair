@@ -1,70 +1,827 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		
-		<!-- menu -->
-        <!--
-		<link rel="stylesheet" href="menu-files/reset.css">
-        <link rel="stylesheet" href="menu-files/main.css">
-        <link rel="stylesheet" href="menu-files/css.css">
-        <script>
-			// iOS viewport scaling bug fix, by @mathias, @cheeaun and @jdalton
-            (function(doc){var addEvent='addEventListener',type='gesturestart',qsa='querySelectorAll',scales=[1,1],meta=qsa in doc?doc[qsa]('meta[name=viewport]'):[];function fix(){meta.content='width=device-width,minimum-scale='+scales[0]+',maximum-scale='+scales[1];doc.removeEventListener(type,fix,true);}if((meta=meta[meta.length-1])&&addEvent in doc){fix();scales=[.25,1.6];doc[addEvent](type,fix,true);}}(document));
-        </script>
-        <!-- menu -->
-        <script type="text/javascript" charset="utf-8" src="js/cordova-2.3.0.js"></script>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<!--<script type='text/javascript' src='http://code.jquery.com/jquery-1.7.2.min.js'></script>-->
+		<script type='text/javascript' src='js/jquery.min.js'></script>
+	    <script type="text/javascript" charset="utf-8" src="js/cordova-2.3.0.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/social.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/silla.js"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-		<script type='text/javascript' src='js/jquery.min.js'></script>
 		<script type="text/javascript" src="js/iScroll.js"></script>
-		<script type="text/javascript" src="js/jScroll.js"></script>
-        <script type="text/javascript" src="js/pauta.js"></script>
-        <script type="text/javascript" src="js/share.js"></script>
-        
-	<script>
-	function share(subject, text) {
-		var share = cordova.require("cordova/plugin/share");
-		share.show({
-			subject : subject,
-			text : text
-		}, function() {
-			 console.log("PhoneGap Plugin: Share: callback success");
-		}, function() {
-			console.log("PhoneGap Plugin: Share: callback error");
+		<script type="text/javascript" src="js/pauta.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.5, maximum-scale=0.5" />
+		<title>La Silla Vacia</title>
+		<link rel="stylesheet" type="text/css" href="css/silla-new.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript">
+		
+		function toTitleCase(str)
+		{
+		    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+		}
+		
+		var originalNavClasses;
+
+		function toggleNav() {
+		    var elem = document.getElementById('navigation_list');
+		    var classes = elem.className;
+		    if (originalNavClasses === undefined) {
+		        originalNavClasses = classes;
+		    }
+		    elem.className = /expanded/.test(classes) ? originalNavClasses : originalNavClasses + ' expanded';
+		}
+		var myScroll;
+
+		$(document).ready(function() {
+			myScroll = new iScroll('wrapper');
 		});
+
+		// Transaction error callback
+        //
+        function errorCB(err) {
+        	alert("Error processing SQL: "+err.code + " - " + err.message);
+        }
+
+        
+
+        function queryDB(tx) {
+        	tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+        }
+            
+        // Query the success callback
+        //
+        function querySuccess(tx, results) {
+        	var records;
+            var len = results.rows.length;
+            //alert("DEMO table: " + len + " rows found.");
+            for (var i=0; i<len; i++){
+            	//alert("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+            }
+        }
+
+
+		$(document).ready(function() {
+			//Main de Pauta
+            main();
+		
+		
+	
+		var url='http://www.lasillavacia.com/json?'+  Math.floor((Math.random()*100000)+1);
+		var jqXHR=$.getJSON(url).always(function(data, textStatus, jqXHR){
+    // console.log("TEXT:",textStatus); //here's your response
+     // console.log("JQ:",jqXHR);
+       // console.log("DATA:",data); 
+      
+       var kh=10;
+       var kq=0;
+       //Verificar conectividad y consultar o guardar en BD el último Feed
+       try{ 
+	       var db = window.openDatabase("Database", "1.0", "Silla", 2000000);
+	       if (textStatus === 'error') {
+	       		alert('No se detecto conectividad');
+	       		db.transaction(function(tx) {
+	        		tx.executeSql('SELECT * FROM DEMO', [],function(tx, results) {
+			        	var records;
+			            var len = results.rows.length;
+			            var tmp = unescape(results.rows.item(0).data); 
+			            data = JSON.parse(tmp);
+			            setData(data,kh,kq);
+			            
+			            
+			            
+			        });
+	        	});
+			}else{
+	       		db.transaction(function(tx){
+					tx.executeSql('DROP TABLE IF EXISTS DEMO');
+	        		tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+		            var idRecord = new Date().getTime()
+		            var parsedData = escape(JSON.stringify(data));
+		            tx.executeSql('INSERT INTO DEMO (id, data) VALUES ('+ idRecord +', " '+parsedData+' ")');
+		            setData(data,kh,kq);
+		        },errorCB);
+		        
+	       }
+	    }catch(err){
+	    	console.log("Error "+err.message); 
+	    	setData(data,kh,kq);
+	    }   
+	           
+        
+	});
+
+	
+});
+
+
+	function setData(data,kh,kq){
+		$.each(data, function(i, field){
+			try{ 
+			
+			var category=field.category;
+
+	    	if(category.toUpperCase()=="historia".toUpperCase() && kh<16){
+	      		//$("div").append(field.title.toUpperCase() + "<br> ");
+	      		
+	      		var d = new Date(field.pubDate);
+				var hoy=new Date();
+				var diasTempo=horasDiferencia(d,hoy);
+				
+				category=toTitleCase(category);
+				var vistas=	field.hits;
+	      		var titulo=field.title;
+	      		var imagen=field.imagen;
+	      		var link=field.link;
+	      		var desc=field.description;
+	      		var autor=field.creator;
+	      		function htmlUnescape(value){
+				    return String(value)
+				        .replace(/&quot;/g, '"')
+				        .replace(/&#39;/g, "'")
+				        .replace(/&lt;/g, '<')
+				        .replace(/&gt;/g, '>')
+				        .replace(/&amp;/g, '&');
+				}
+				
+	      		 var hautor=htmlUnescape(autor);				  
+				 hautor=$(hautor).html();
+	      		var tags=field.tags;
+				var hilos=field.hilos;
+	      		
+	      		var thediv=$("<div>").attr({
+						    'class': "grid",
+						    'id': "feed" + (kh + 1) + "-1"
+						}).appendTo("#columns");
+				
+						
+				$("<div>").attr({
+						    'class': "seccion"						   
+						}).appendTo($(thediv)).html(category);
+				
+				$("<div>").attr({
+						    'class': "tempo"						   
+						}).appendTo($(thediv)).html(diasTempo);
+				$("<div>").attr({
+						    'class': "vistas"						   
+						}).appendTo($(thediv)).html(vistas);	
+				$("<div>").attr({						    
+				    
+				}).appendTo($(thediv)).append("<img class='imagen-historia-"+(kh+1)+"' src='"+imagen+"'/>");
+						
+				$("<div>").attr({
+						    'class': "tituloTextGrande"+"-"+(kh+1)						     			   
+						}).appendTo($(thediv)).html(titulo);
+						
+				
+				var thenota=$("<div>").attr({
+						    'class': "hidden",
+						    'id': "feed-nota" + (kh + 1) + "-1"
+						}).appendTo("#columns-nota");
+						// .click(function() {
+    							// toggleHome();
+  				// });
+				
+				$("<div>").attr("id","borderHistorias").appendTo(thenota);
+				$("<div>").attr({
+						    'class': "rrss"		
+						}).appendTo($(thenota)).click(function() {  
+								shareTitle(titulo, link);										  //hide();
+					});	   
+				var tagHtml='';
+					for (var i=0; i < tags.length; i++) {
+					  tagHtml=tagHtml+', '+tags[i].name;
+					 
+					}
+					tagHtml=tagHtml.substr(2,tagHtml.length);
+					
+				var hilosHtml='';
+				for (var i=0; i < hilos.length; i++) {
+				  hilosHtml=hilosHtml+', '+hilos[i].name;
+				 
+				}
+				hilosHtml=hilosHtml.substr(2,hilosHtml.length);
+					
+				
+				$("<div>").attr({
+				    'class': "tagsHistorias"						   
+				}).appendTo($(thenota)).html("Tag:"+tagHtml);
+				$("<div>").attr({
+				    'class': "hilosHistorias"						   
+				}).appendTo($(thenota)).html("Hilos Temáticos:"+hilosHtml);
+				
+				
+				$("<div>").attr({
+				    'class': "tituloTextNotaHistoria"						   
+				}).appendTo($(thenota)).html(titulo);
+				
+				$("<div>").attr({
+				    'class': "autorNota"						   
+				}).appendTo($(thenota)).html(hautor);
+				$("<div>").attr({
+						    'class': "tempoNota"						   
+						}).appendTo($(thenota)).html(diasTempo);
+				$("<div>").attr({
+						    'class': "vistasNota"						   
+						}).appendTo($(thenota)).html(vistas);	
+				var articulo=$(desc).removeAttr("style");
+				
+				$("<div>").attr({
+						    'class': "articuloText"						   
+						}).appendTo($(thenota)).html(articulo);
+	
+								
+				kh++;
+						
+									
+	      }else if(category.toUpperCase()=="blog_redaccion".toUpperCase() && kq<3){
+	      		var d = new Date(field.pubDate);
+				var hoy=new Date();
+				var diasTempo=horasDiferencia(d,hoy);
+				
+				category=toTitleCase(category);
+				var vistas=	field.hits;
+	      		var titulo=field.title;
+		      	var link=field.link;
+		      	var desc=field.description;
+	      		var autor=field.creator;	      		
+	      		function htmlUnescape(value){
+				    return String(value)
+				        .replace(/&quot;/g, '"')
+				        .replace(/&#39;/g, "'")
+				        .replace(/&lt;/g, '<')
+				        .replace(/&gt;/g, '>')
+				        .replace(/&amp;/g, '&');
+				}
+				
+	      		 var hautor=htmlUnescape(autor);				  
+				 hautor=$(hautor).html();
+	      		var tags=field.tags;
+	      		
+	      		
+	      		var thediv=$("<div>").attr({
+						    'class': "grid",
+						    'id': "feed" + (kq + 1) + "-1"
+						}).appendTo("#columns");
+				$("<div>").attr({
+						    'class': "tituloText"						     			   
+						}).appendTo($(thediv)).html(titulo);		
+				
+				$("<div>").attr({
+						    'class': "tempo"						   
+						}).appendTo($(thediv)).html(diasTempo);
+				$("<div>").attr({
+						    'class': "vistas"						   
+						}).appendTo($(thediv)).html(vistas);						
+			
+				var thenota=$("<div>").attr({
+						    'class': "hidden",
+						    'id': "feed-nota" + (kq + 1) + "-1"
+						}).appendTo("#columns-nota");
+						// .click(function() {
+    							// toggleHome();
+  				// });
+			
+				$("<div>").attr({
+						    'class': "rrssQ"		
+						}).appendTo($(thenota)).click(function() {  
+								shareTitle(titulo, link);										  //hide();
+					});	   
+				var tagHtml='';
+				for (var i=0; i < tags.length; i++) {
+				  tagHtml=tagHtml+', '+tags[i].name;
+				 
+				}
+				tagHtml=tagHtml.substr(2,tagHtml.length);
+				
+				
+				$("<div>").attr({
+				    'class': "tagsQueridoDiario"						   
+				}).appendTo($(thenota)).html("Tag:"+tagHtml);
+				
+				
+				$("<div>").attr({
+				    'class': "tituloTextNota"						   
+				}).appendTo($(thenota)).html(titulo);
+				
+				$("<div>").attr({
+				    'class': "autorNota"						   
+				}).appendTo($(thenota)).html(hautor);
+				$("<div>").attr({
+						    'class': "tempoNota"						   
+						}).appendTo($(thenota)).html(diasTempo);
+				$("<div>").attr({
+						    'class': "vistasNota"						   
+						}).appendTo($(thenota)).html(vistas);	
+				var articulo=$(desc).removeAttr("style").find("*").removeClass();
+				$("<div>").attr({
+						    'class': "articuloTextQueridoDiario"						   
+						}).appendTo($(thenota)).html(desc);
+				
+								
+					
+				kq++;	
+	      	}
+
+	      }catch(err)
+		  {
+		  		alert('err ' + err + 'err.message ' + err.message);
+		  }
+	    });			  
+	    //Inicia con Home4	
+		setHome();
+
 	}
-	</script>
+
+
+
+	function setHome(){
+		var div111 = $('#feed11-1').clone();
+		var div121 = $('#feed12-1').clone();		
+		var div131 = $('#feed13-1').clone();
+		var div141 = $('#feed14-1').clone();
+		//Sin uso
+		var div151 = $('#feed15-1').clone();
+		var div161 = $('#feed16-1').clone();
+		
+		//Clonar para Querido diario
+		var div11 = $('#feed1-1').clone();
+		var div21 = $('#feed2-1').clone();		
+		var div31 = $('#feed3-1').clone();
+		//Clonar notas
+		var nota111=$('#feed-nota11-1').clone();
+		var nota121=$('#feed-nota12-1').clone();
+		var nota131=$('#feed-nota13-1').clone();
+		var nota141=$('#feed-nota14-1').clone();
+		var nota151=$('#feed-nota15-1').clone();
+		var nota161=$('#feed-nota16-1').clone();
+		
+	
+		var nota11=$('#feed-nota1-1').clone();
+		var nota12=$('#feed-nota2-1').clone();
+		var nota13=$('#feed-nota3-1').clone();
+		
+		// $('#feed13-1').html(div111.html());
+		// $('#feed13-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-13");
+		// $('#feed13-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-13");
+		// $('feed-nota13-1').html(nota111.html());
+		// $('#feed14-1').html(div121.html());
+		// $('#feed14-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-14");
+		// $('#feed14-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-14");
+		// $('feed-nota14-1').html(nota121.html());
+// 		
+		// $('#feed15-1').html(div131.html());
+		// $('#feed15-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-15");
+		// $('#feed15-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-15");
+		// $('feed-nota15-1').html(nota131.html());
+// 		
+		// $('#feed16-1').html(div141.html());
+		// $('#feed16-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-16");
+		// $('#feed16-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-16");
+		// $('feed-nota16-1').html(nota141.html());
 		
 		
-		<!-- iPad/iPhone specific css below, add after your main css >
+		$('#feed3-1').remove();	
+		$('#feed-nota3-1').remove();
+		
+		$("<div>").attr("id","feed3-1").appendTo("#columns").html(div11.html());
+		//$('#feed3-1').toggleClass('hidden');		
+		$("<div>").attr("id","feed4-1").appendTo("#columns").html(div21.html());
+		$("<div>").attr('id','feed-nota3-1').appendTo("#columns-nota").html(nota11.html());
+		$("<div>").attr('id','feed-nota4-1').appendTo("#columns-nota").html(nota12.html());
+		$('#feed-nota3-1').toggleClass('hidden');
+		$('#feed-nota4-1').toggleClass('hidden');
+		$("<div>").attr("id","feed5-1").appendTo("#columns").html(div11.html());		
+		//$('#feed5-1').toggleClass('hidden');
+		$("<div>").attr("id","feed6-1").appendTo("#columns").html(div21.html());		
+		$("<div>").attr('id','feed-nota5-1').appendTo("#columns-nota").html(nota11.html());
+		$("<div>").attr('id','feed-nota6-1').appendTo("#columns-nota").html(nota12.html());
+		$('#feed-nota5-1').toggleClass('hidden');
+		$('#feed-nota6-1').toggleClass('hidden');
+		
+		//Para mini Home Querido Diario
+		$("<div>").attr("id","feed7-1").appendTo("#columns-nota").html(div11.html());
+		//$('#feed3-1').toggleClass('hidden');		
+		$("<div>").attr("id","feed8-1").appendTo("#columns-nota").html(div21.html());
+		$("<div>").attr("id","feed9-1").appendTo("#columns-nota").html(div31.html());
+		$("<div>").attr('id','feed-nota7-1').appendTo("#columns-nota").html(nota11.html());
+		$("<div>").attr('id','feed-nota8-1').appendTo("#columns-nota").html(nota12.html());
+		$("<div>").attr('id','feed-nota9-1').appendTo("#columns-nota").html(nota13.html());
+		$('#feed-nota7-1').toggleClass('hidden');
+		$('#feed-nota8-1').toggleClass('hidden');
+		$('#feed-nota9-1').toggleClass('hidden');
+		
+		$("<div>").attr("id","seccionQ").appendTo("#columns-nota").html("Querido Diario");
+		$("<div>").attr("id","seccionQborder").appendTo("#columns-nota");
+		$('#seccionQ').toggleClass('hidden');
+		
+		$('#seccionQborder').toggleClass('hidden');
+		$("<div>").attr("id","borderQueridoDiario").appendTo("#columns-nota");
+		$('#borderQueridoDiario').toggleClass('hidden');
+		
+		$('#feed13-1').remove();
+		$('#feed14-1').remove();
+		$('#feed15-1').remove();
+		$('#feed16-1').remove();
+		$('#feed-nota13-1').remove();
+		$('#feed-nota14-1').remove();
+		$('#feed-nota15-1').remove();
+		$('#feed-nota16-1').remove();
+	
+		//Para Home 8 a partir de Home4 pero se oculta despues de creacion
+		$("<div>").attr("id","feed13-1").appendTo("#columns").html(div111.html());
+		$('#feed13-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-13");
+		$('#feed13-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-13");
+		
+		$("<div>").attr('id','feed-nota13-1').appendTo("#columns-nota").html(nota111.html());
+		$('#feed-nota13-1').toggleClass('hidden');
+		
+		//Para Home 8 a partir de Home4 pero se oculta despues de creacion
+		$("<div>").attr("id","feed14-1").appendTo("#columns").html(div121.html());
+		$('#feed14-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-14");
+		$('#feed14-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-14");
+		
+		$("<div>").attr('id','feed-nota14-1').appendTo("#columns-nota").html(nota121.html());
+		$('#feed-nota14-1').toggleClass('hidden');
+		
+		//Para Home 8 a partir de Home4 pero se oculta despues de creacion
+		$("<div>").attr("id","feed15-1").appendTo("#columns").html(div131.html());
+		$('#feed15-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-15");
+		$('#feed15-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-15");
+	
+		$("<div>").attr('id','feed-nota15-1').appendTo("#columns-nota").html(nota131.html());
+		$('#feed-nota15-1').toggleClass('hidden');
+		
+		//Para Home 8 a partir de Home4 pero se oculta despues de creacion
+		$("<div>").attr("id","feed16-1").appendTo("#columns").html(div141.html());
+		$('#feed16-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-16");
+		$('#feed16-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-16");
+		
+		$("<div>").attr('id','feed-nota16-1').appendTo("#columns-nota").html(nota141.html());
+		$('#feed-nota16-1').toggleClass('hidden');
+		
+
+		
+		
+		//Para Home 8 a partir de Home4 pero se oculta despues de creacion
+		$("<div>").attr("id","feed17-1").appendTo("#columns").html(div111.html());
+		$('#feed17-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-17");
+		$('#feed17-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-17");
+		$('#feed17-1').find(".seccion").remove();
+		$("<div>").attr('id','feed-nota17-1').appendTo("#columns-nota").html(nota111.html());
+		$('#feed-nota17-1').toggleClass('hidden');
+		
+		$("<div>").attr("id","feed18-1").appendTo("#columns").html(div121.html());
+		$('#feed18-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-18");
+		$('#feed18-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-18");
+		$("<div>").attr('id','feed-nota18-1').appendTo("#columns-nota").html(nota121.html());		
+		$('#feed18-1').find(".seccion").remove();
+		$('#feed-nota18-1').toggleClass('hidden');
+		
+		$("<div>").attr("id","feed19-1").appendTo("#columns").html(div131.html());
+		$('#feed19-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-19");
+		$('#feed19-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-19");		
+		$('#feed19-1').find(".seccion").remove();
+		$("<div>").attr('id','feed-nota19-1').appendTo("#columns-nota").html(nota131.html());	
+		$('#feed-nota19-1').toggleClass('hidden');
+		
+		$("<div>").attr("id","feed20-1").appendTo("#columns").html(div141.html());
+		$('#feed20-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-20");
+		$('#feed20-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-20");		
+		$('#feed20-1').find(".seccion").remove();
+		$("<div>").attr('id','feed-nota20-1').appendTo("#columns-nota").html(nota141.html());	
+		$('#feed-nota20-1').toggleClass('hidden');
+		
+		$("<div>").attr("id","feed21-1").appendTo("#columns").html(div151.html());
+		$('#feed21-1').find("img[class^='imagen-historia-']").attr("class", "imagen-historia-21");
+		$('#feed21-1').find("div[class^='tituloTextGrande-']").attr("class", "tituloTextGrande-21");
+		$('#feed21-1').find(".seccion").remove();
+		$("<div>").attr('id','feed-nota21-1').appendTo("#columns-nota").html(nota151.html());	
+		$('#feed-nota21-1').toggleClass('hidden');
+		
+		$('#feed11-1').click(function() {
+			toggleNota('#feed11-1');
+		});
+		$('#feed12-1').click(function() {
+			toggleNota('#feed12-1');
+		});
+		$('#feed13-1').click(function() {
+			toggleNota('#feed13-1');		
+		});
+		$('#feed14-1').click(function() {
+			toggleNota('#feed14-1');
+		});
+		$('#feed15-1').click(function() {
+			toggleNota('#feed15-1');
+		});
+		$('#feed16-1').click(function() {
+			toggleNota('#feed16-1');
+		});		
+		$('#feed17-1').click(function() {
+			toggleNota('#feed17-1');
+		});
+		$('#feed18-1').click(function() {
+			toggleNota('#feed18-1');
+		});
+		$('#feed19-1').click(function() {
+			toggleNota('#feed19-1');
+		});
+		$('#feed20-1').click(function() {
+			toggleNota('#feed20-1');
+		});
+		$('#feed21-1').click(function() {
+			toggleNota('#feed21-1');
+		});
+		
+		
+		$('#feed1-1').click(function() {
+			toggleNota('#feed1-1');
+		});
+		$('#feed2-1').click(function() {
+			toggleNota('#feed2-1');
+		});
+		$('#feed3-1').click(function() {
+			toggleNota('#feed3-1');
+		});
+		$('#feed4-1').click(function() {
+			toggleNota('#feed4-1');
+		});
+		$('#feed5-1').click(function() {
+			toggleNota('#feed5-1');
+		});
+		$('#feed6-1').click(function() {
+			toggleNota('#feed6-1');
+		});
+		
+		$('#feed7-1').click(function() {
+			toggleNotaQueridoD('#feed7-1');
+		});
+		$('#feed8-1').click(function() {
+			toggleNotaQueridoD('#feed8-1');
+		});
+		$('#feed9-1').click(function() {
+			toggleNotaQueridoD('#feed9-1');
+		});
+		
+		
+	
+		
+		$('#feed13-1').toggleClass('hidden');
+		$('#feed14-1').toggleClass('hidden');
+		$('#feed15-1').toggleClass('hidden');
+		$('#feed16-1').toggleClass('hidden');
+		$('#feed3-1').toggleClass('hidden');	
+		$('#feed4-1').toggleClass('hidden');
+		$('#feed11-1').toggleClass('hidden');
+		$('#feed12-1').toggleClass('hidden');
+		$('#feed1-1').toggleClass('hidden');	
+		$('#feed2-1').toggleClass('hidden');
+		$('#feed7-1').toggleClass('hidden');
+		$('#feed8-1').toggleClass('hidden');
+		$('#feed9-1').toggleClass('hidden');
+		//Se oculta por primera vez para Home4
+		setHome4();
+		
+		
+		
+	}
+	
+	
+	
+	function setHome6(){
+		
+			//Ocultar Home 4
+		$('#feed11-1').toggleClass('hidden');
+		$('#feed12-1').toggleClass('hidden');	
+		$('#feed1-1').toggleClass('hidden');
+		$('#feed2-1').toggleClass('hidden');
+		//Mostrar div Home 6 
+		showHome6();
+	
+	}
+	function showHome6(){
+		$('#feed13-1').toggleClass('hidden');
+		$('#feed14-1').toggleClass('hidden');
+		$('#feed15-1').toggleClass('hidden');
+		$('#feed16-1').toggleClass('hidden');
+	
+		$('#feed3-1').toggleClass('hidden');	
+		$('#feed4-1').toggleClass('hidden');	
+		
+		//Variable Global para saber en que Home estamos
+		$('#home').html(6);
+		$('#pauta').attr("id","pauta-home6");
+		$('#redes').attr("id","redes-home6");
+		$('#twitter-home4').attr("id","twitter-home6");
+		$('#twitter-fav-home4').attr("id","twitter-fav-home6");
+		
+	}
+	
+	function setHome8(){
+		//Ocultar Home6
+		$('#feed13-1').toggleClass('hidden');
+		$('#feed14-1').toggleClass('hidden');
+		$('#feed15-1').toggleClass('hidden');
+		$('#feed16-1').toggleClass('hidden');
+		$('#feed3-1').toggleClass('hidden');	
+		$('#feed4-1').toggleClass('hidden');
+		//Mostrar Home8
+		showHome8();
+
+	}
+	function showHome8(){
+		$('#feed17-1').toggleClass('hidden');
+		$('#feed18-1').toggleClass('hidden');
+		$('#feed19-1').toggleClass('hidden');
+		$('#feed20-1').toggleClass('hidden');
+		$('#feed21-1').toggleClass('hidden');		
+		$('#feed5-1').toggleClass('hidden');
+		$('#feed6-1').toggleClass('hidden');	
+	
+		
+		$('#home').html(8);
+		$('#pauta-home6').attr("id","pauta-home8");
+		$('#redes-home6').attr("id","redes-home8");
+		$('#twitter-home6').attr("id","twitter-home8");
+		$('#twitter-fav-home6').attr("id","twitter-fav-home8");
+
+
+	}
+	
+	function setHome4(){
+	//Ocultar home8
+		$('#feed17-1').toggleClass('hidden');
+		$('#feed18-1').toggleClass('hidden');
+		$('#feed19-1').toggleClass('hidden');
+		$('#feed20-1').toggleClass('hidden');
+		$('#feed21-1').toggleClass('hidden');		
+	
+		$('#feed5-1').toggleClass('hidden');
+		$('#feed6-1').toggleClass('hidden');	
+			//Mostrar Home4
+		showHome4();
+
+	}
+	function showHome4(){
+		$('#feed11-1').toggleClass('hidden');
+		$('#feed12-1').toggleClass('hidden');
+		$('#feed1-1').toggleClass('hidden');	
+		$('#feed2-1').toggleClass('hidden');
+		
+		$('#home').html(4);
+		$('#pauta-home8').attr("id","pauta");
+		$('#redes-home8').attr("id","redes");
+		$('#twitter-home8').attr("id","twitter-home4");
+		$('#twitter-fav-home8').attr("id","twitter-fav-home4");
+	}
+	function toggleHome(){
+		var homeId=$('#home').html();
+		var nota_var=$('#nota_var').html();
+		if(nota_var=='home'){		
+			if(homeId==4){
+				setHome6();		
+			}if(homeId==6){
+				setHome8();		
+			}if(homeId==8){
+				setHome4();		
+			}
+		}else{
+			$('#columns-nota').find("div[id^='feed-nota" + nota_var+"']").toggleClass('hidden');
+			$('#wrapper').toggleClass('hidden');
+			if(homeId==4){
+				showHome6();		
+			}if(homeId==6){
+				showHome8();		
+			}if(homeId==8){
+				showHome4();		
+			}
+			homeId=$('#home').html(); 
+			if(homeId==4){
+				$('#pauta').toggleClass('hidden');	
+				$('#redes').toggleClass('hidden');	
+			}if(homeId==6){
+				$('#pauta-home6').toggleClass('hidden');	
+				$('#redes-home6').toggleClass('hidden');
+			}if(homeId==8){
+				$('#pauta-home8').toggleClass('hidden');
+				$('#redes-home8').toggleClass('hidden');
+			}
+			var idnotaQ=nota_var.substr(0,2);
+			
+			if(parseInt(idnotaQ)<10){
+				$('#feed7-1').toggleClass('hidden');
+				$('#feed8-1').toggleClass('hidden');
+				$('#feed9-1').toggleClass('hidden');
+				$('#seccionQ').toggleClass('hidden');	
+				$('#seccionQborder').toggleClass('hidden');	
+				$('#borderQueridoDiario').toggleClass('hidden');					
+		}
+			$('#nota_var').html("home");
+		}
+	}
+	
+	function toggleNota(idNoticia){
+		//alert("IdNoticia:"+idNoticia);
+		
+		var idnota= idNoticia.substr(5,5);
+		var idnotaQ=idnota.substr(0,2);
+		$('#nota_var').html(idnota);
+		//alert("Toggle:feed-nota" + idnota);
+		$('#columns').find("div[id^='feed']").removeClass('hidden');
+		$('#columns').find("div[id^='feed']").toggleClass('hidden');
+		$('#columns-nota').find("div[id^='feed-nota" + idnota+"']").toggleClass('hidden');
+		$('#wrapper').toggleClass('hidden');
+		
+		if(parseInt(idnotaQ)<10){
+			$('#feed7-1').toggleClass('hidden');
+			$('#feed8-1').toggleClass('hidden');
+			$('#feed9-1').toggleClass('hidden');	
+			$('#seccionQ').toggleClass('hidden');	
+			$('#seccionQborder').toggleClass('hidden');			
+			$('#borderQueridoDiario').toggleClass('hidden');
+			var altura=$('#columns-nota').find("div[id^='feed-nota" + idnota+"']").find('.articuloTextQueridoDiario').height();		
+			$('#columns-nota').css('height', altura+'px');
+			myScroll.refresh();
+			
+		}else{
+				var altura=$('#columns-nota').find("div[id^='feed-nota" + idnota+"']").find('.articuloText').height();
+			
+			$('#columns-nota').css('height', altura+'px');
+			myScroll.refresh();
+		}
+		
+		var homeId=$('#home').html();
+		
+		if(homeId==4){
+			$('#pauta').toggleClass('hidden');	
+			$('#redes').toggleClass('hidden');	
+		}if(homeId==6){
+			$('#pauta-home6').toggleClass('hidden');	
+			$('#redes-home6').toggleClass('hidden');
+		}if(homeId==8){
+			$('#pauta-home8').toggleClass('hidden');
+			$('#redes-home8').toggleClass('hidden');
+		}
+		
+		
+		
+		
+		//var altura=$('#feed-nota12-1').find('.articuloText').height();
+		//.find("div[id^='feed-nota" + idnota+"']").height();
+		
+		
+	}
+	
+	function toggleNotaQueridoD(idNoticia){
+			var idnota= idNoticia.substr(5,5);
+			var idnotaQ=idnota.substr(0,1);
+			var idnotaAnterior=$('#nota_var').html();
+			
+			$('#columns-nota').find("div[id^='feed-nota" + idnotaAnterior+"']").toggleClass('hidden');
+			$('#columns-nota').find("div[id^='feed-nota" + idnota+"']").toggleClass('hidden');
+			$('#nota_var').html(idnota);
+			
+			var altura=$('#columns-nota').find("div[id^='feed-nota" + idnota+"']").find('.articuloTextQueridoDiario').height();		
+			$('#columns-nota').css('height', altura+'px');
+			myScroll.refresh();
+			
+		}
+	
+			</script>
+<!-- iPad/iPhone specific css below, add after your main css >
          <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
          <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />
          -->
         <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta name="viewport" content="width=800"/>
-		<title></title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.5, maximum-scale=0.5" />
+		<title>La Silla Vacia</title>
 		<link rel="stylesheet" type="text/css" href="css/silla-new.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	</head>
 	<body>
-	<div id="head">
+		<div id="head">
                 <img id="superior" src="img/superior@2x.png"/>
-                <img id="volver" src="img/volver@2x.png" onclick="window.location = 'index6.html'"/>
+              <!--  <img id="volver" src="img/volver@2x.png" onclick="window.location = 'index6.html'"/>-->
+               <img id="volver" src="img/volver@2x.png" onclick="toggleHome()"/>
                 <img id="sillalogo" src="img/sillalogo@2x.png"/>
                 <img id="buscar" src="img/busqueda@2x.png" onclick="open_win('http://www.lasillavacia.com/')"/>
                 <div class="block-touch"></div>
                 <nav id="navigation">
                   <a class="menu_button" href="#footer_nav" onclick="toggleNav(); return false;"></a>
                   <ul id="navigation_list" role="navigation">
-                    <li onclick="share('http://www.lasillavacia.com/historias','http://www.lasillavacia.com/historias')"> HISTORIAS </li>
-                    <li onclick="open_win('http://www.lasillavacia.com/queridodiario')"><a href="index6.html" class="item2">QUERIDO DIARIO</a></li>
-                    <li onclick="open_win('http://www.lasillavacia.com/datanews')"><a href="index6.html"   class="item3">H&Aacute;GAME EL CRUCE</a></li>
-                    <li onclick="open_win('http://www.lasillavacia.com/blogs')"><a href="index6.html"  class="item4">EL BLOGUEO</a></li>
-                    <li onclick="open_win('http://www.lasillavacia.com/butaca')"><a href="index6.html" class="item3">LA BUTACA</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/historias')"><a href="#"  class="item1">HISTORIAS</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/queridodiario')"><a href="#" class="item2">QUERIDO DIARIO</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/datanews')"><a href="#"   class="item3">H&Aacute;GAME EL CRUCE</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/blogs')"><a href="#"  class="item4">EL BLOGUEO</a></li>
+                    <li onclick="open_win('http://www.lasillavacia.com/butaca')"><a href="#" class="item3">LA BUTACA</a></li>
                     <li><a href="#" class="item2">SALA DE EST&Eacute;TICA</a></li>
-                    <li onclick="open_win('http://www.proyectorosa.com/blog/')"><a href="index6.html" class="item1">PROYECTO ROSA</a></li>
+                    <li onclick="open_win('http://www.proyectorosa.com/blog/')"><a href="#" class="item1">PROYECTO ROSA</a></li>
                  </ul>
                 </nav>
         </div>	
@@ -75,19 +832,18 @@
 					
 				</div>
 				<div id="redes">
-					<div class="twitter-home4">
+                   <div id="twitter-home4">
 	                    <a class="twitter-timeline" width="300" height="25" data-chrome="nofooter noscrollbar noheader transparent" href="https://twitter.com/lasilladice"  data-widget-id="344674302534238209"></a>
 	                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 	</div>
-                	<div class="twitter-fav-home4">
-	                    <a class="twitter-timeline" width="300" height="20" href="https://twitter.com/lasillavacia/favorites"  data-chrome="nofooter noscrollbar noheader transparent" data-widget-id="347747823762157569">Tweets</a>
+                	<div id="twitter-fav-home4">
+	                    <a class="twitter-timeline" width="300" height="25" href="https://twitter.com/lasillavacia/favorites"  data-chrome="nofooter noscrollbar noheader transparent" data-widget-id="347747823762157569"></a>
 	                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	                </div>
-				
 				</div>
 			</div>
 		</div>
-		<div id="wrapper" class='wrapper'>
+		<div id="wrapper" class='hidden'>
 			
 				<div id="columns-nota">
 				</div>
@@ -97,5 +853,8 @@
 				<img id="inferior" src="img/barra_inferior@2x.png"/>
 				<img id="inferiorLive" src="img/botonLIFEoff@2x.png" onclick="window.location.href='vivo.html'"/>
 		</div>
+
+		<div id="home" class="hidden">4</div>
+		<div id="nota_var" class="hidden">home</div>
 	</body>
 </html>
